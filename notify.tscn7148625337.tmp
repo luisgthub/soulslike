@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://6cll2j1bc0y1"]
+
+[ext_resource type="Script" uid="uid://rxbxe6vwaynp" path="res://notify.gd" id="1_uqql6"]
+
+[node name="notify" type="Label" unique_id=530399762]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("1_uqql6")

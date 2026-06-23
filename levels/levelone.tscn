@@ -1,0 +1,33 @@
+[gd_scene format=4 uid="uid://b8kn3mdimlvcf"]
+
+[ext_resource type="Texture2D" uid="uid://csxk5foqphd0t" path="res://assets/ui/background.png" id="1_7vqxa"]
+[ext_resource type="Texture2D" uid="uid://bdvwxuj2akuff" path="res://assets/map/tile1.png" id="2_x8uav"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_52bd8"]
+texture = ExtResource("2_x8uav")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0 = 0
+1:1/0 = 0
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+3:1/0 = 0
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_bhunq"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_52bd8")
+
+[node name="levelone" type="Node2D" unique_id=1282263738]
+
+[node name="background" type="Sprite2D" parent="." unique_id=920972518]
+texture = ExtResource("1_7vqxa")
+centered = false
+
+[node name="tile" type="TileMapLayer" parent="." unique_id=232004266]
+tile_map_data = PackedByteArray("AAACAAcAAAAAAAAAAAACAAgAAAAAAAEAAAADAAcAAAABAAAAAAADAAgAAAABAAEAAAAEAAcAAAAAAAAAAAAEAAgAAAAAAAEAAAAFAAcAAAABAAAAAAAFAAgAAAABAAEAAAAGAAcAAAAAAAAAAAAGAAgAAAAAAAEAAAAHAAcAAAABAAAAAAAHAAgAAAABAAEAAAAIAAcAAAAAAAAAAAAIAAgAAAAAAAEAAAAJAAcAAAABAAAAAAAJAAgAAAABAAEAAAAKAAYAAAACAAAAAAAKAAcAAAACAAEAAAALAAYAAAADAAAAAAALAAcAAAADAAEAAAAMAAYAAAAAAAAAAAAMAAcAAAAAAAEAAAANAAYAAAABAAAAAAANAAcAAAABAAEAAAAOAAYAAAAAAAAAAAAOAAcAAAAAAAEAAAAPAAYAAAABAAAAAAAPAAcAAAABAAEAAAAQAAYAAAAAAAAAAAAQAAcAAAAAAAEAAAARAAYAAAABAAAAAAARAAcAAAABAAEAAAASAAYAAAAAAAAAAAASAAcAAAAAAAEAAAATAAYAAAABAAAAAAATAAcAAAABAAEAAAAAAAgAAAAAAAEAAAABAAcAAAABAAAAAAABAAgAAAABAAEAAAAAAAcAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_bhunq")

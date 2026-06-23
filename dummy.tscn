@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://du5strxubaujv"]
+
+[ext_resource type="Texture2D" uid="uid://bfcmtwggjygm1" path="res://assets/sprites/dummy.png" id="1_gtj52"]
+[ext_resource type="Script" uid="uid://dgsrpyvqv0kv2" path="res://dummy.gd" id="1_xmspm"]
+[ext_resource type="PackedScene" uid="uid://6cll2j1bc0y1" path="res://notify.tscn" id="2_0umox"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmspm"]
+size = Vector2(6, 10)
+
+[node name="dummy" type="CharacterBody2D" unique_id=463930189]
+script = ExtResource("1_xmspm")
+notify = ExtResource("2_0umox")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=367008814]
+texture = ExtResource("1_gtj52")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1844037262]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1722828169]
+shape = SubResource("RectangleShape2D_xmspm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1482316463]
+shape = SubResource("RectangleShape2D_xmspm")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]

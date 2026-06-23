@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://nr8h1iaup0e7"]
+
+[ext_resource type="Texture2D" uid="uid://bysq5wkb0o6ha" path="res://assets/ui/lifebar_over.png" id="1_vt5b8"]
+[ext_resource type="Texture2D" uid="uid://bpydsejqxad2x" path="res://assets/ui/stamina_over.png" id="2_03ww2"]
+[ext_resource type="Texture2D" uid="uid://dgu4h1wybie" path="res://assets/ui/lifebar_sprite.png" id="2_nypxb"]
+[ext_resource type="Texture2D" uid="uid://b15l64nlh7fcy" path="res://assets/ui/lifebar_inside.png" id="3_nypxb"]
+[ext_resource type="Texture2D" uid="uid://ckisypdhoilo1" path="res://assets/ui/stamina_sprite.png" id="5_meeuc"]
+[ext_resource type="Texture2D" uid="uid://mou50glarn3v" path="res://assets/ui/stamina_inside.png" id="6_rggtw"]
+
+[node name="ui" type="CanvasLayer" unique_id=1527890012]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=759188019]
+offset_left = 8.0
+offset_right = 48.0
+offset_bottom = 68.0
+
+[node name="life" type="TextureProgressBar" parent="VBoxContainer" unique_id=1083505]
+layout_mode = 2
+min_value = 5.0
+value = 100.0
+texture_under = ExtResource("1_vt5b8")
+texture_over = ExtResource("2_nypxb")
+texture_progress = ExtResource("3_nypxb")
+
+[node name="stamina" type="TextureProgressBar" parent="VBoxContainer" unique_id=1952743665]
+layout_mode = 2
+min_value = 3.0
+value = 3.0
+texture_under = ExtResource("2_03ww2")
+texture_over = ExtResource("5_meeuc")
+texture_progress = ExtResource("6_rggtw")
