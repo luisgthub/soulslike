@@ -2,9 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://cw6jglqst3a8q" path="res://assets/sprites/player.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://we01444vejsy" path="res://player.gd" id="1_onrkg"]
-[ext_resource type="Texture2D" uid="uid://8g5p3sfwv14v" path="res://assets/sprites/katana2.png" id="3_sweqy"]
 [ext_resource type="Texture2D" uid="uid://1jdgrepcowi7" path="res://assets/sprites/particleweapon.png" id="4_hqtel"]
 [ext_resource type="Texture2D" uid="uid://lgyb3vppfi0k" path="res://assets/sprites/particlewalk.png" id="5_sweqy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sweqy"]
+size = Vector2(7, 8)
 
 [sub_resource type="Animation" id="Animation_onrkg"]
 length = 0.001
@@ -23,7 +25,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_i3pqv"]
 resource_name = "attack1"
-length = 1.7666667
+length = 1.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -31,10 +33,27 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.43, 0.8666667, 1.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0.033333242, 0.23333333, 0.43333334, 0.56666666, 0.73333335, 1.0333333, 1.2, 1.3666667, 1.5333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [3, 4, 5, 6]
+"values": [4, 5, 6, 8, 7, 8, 6, 4, 3]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.6333333, 1.2666667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"on_hitbox"
+}, {
+"args": [],
+"method": &"off_hitbox"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_hqtel"]
@@ -55,7 +74,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_4flbx"]
 resource_name = "idle"
-length = 1.3666667
+length = 1.3
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -64,19 +83,15 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.43),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.43, 0.86),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [0, 1]
+"values": [0, 1, 2]
 }
-
-[sub_resource type="Animation" id="Animation_sweqy"]
-resource_name = "idle_weapon"
 
 [sub_resource type="Animation" id="Animation_2hs0m"]
 resource_name = "roll"
-length = 1.3
-loop_mode = 2
+length = 1.2333333
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -84,10 +99,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.43333334, 0.8666667),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0.033333335, 0.23333333, 0.43333334, 0.6333333, 0.8333333, 1.0333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [3, 4, 5]
+"values": [10, 11, 12, 13, 14, 15]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_onrkg"]
@@ -96,16 +111,11 @@ _data = {
 &"attack1": SubResource("Animation_i3pqv"),
 &"attack2": SubResource("Animation_hqtel"),
 &"idle": SubResource("Animation_4flbx"),
-&"idle_weapon": SubResource("Animation_sweqy"),
 &"roll": SubResource("Animation_2hs0m")
 }
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_bhunq"]
-a = Vector2(3, -2)
-b = Vector2(3, -14)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bhunq"]
-size = Vector2(5, 12)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_riqys"]
+size = Vector2(8, 10)
 
 [node name="player" type="CharacterBody2D" unique_id=777571882]
 z_index = 1
@@ -116,51 +126,40 @@ script = ExtResource("1_onrkg")
 [node name="hand" type="Marker2D" parent="visual" unique_id=2048347686]
 position = Vector2(1, 6)
 
-[node name="Sprite2D" type="Sprite2D" parent="visual/hand" unique_id=1850854036]
-z_index = -1
-position = Vector2(3, -7)
-texture = ExtResource("3_sweqy")
-hframes = 2
-
-[node name="sword_anim" type="AnimationPlayer" parent="visual/hand" unique_id=232001747]
-libraries/ = SubResource("AnimationLibrary_onrkg")
-autoplay = &"idle"
-speed_scale = 5.0
-
 [node name="sword_particle" type="CPUParticles2D" parent="visual/hand" unique_id=1606278561]
 z_index = -1
-position = Vector2(3, -11)
+position = Vector2(17, -2)
 rotation = 1.553343
 texture = ExtResource("4_hqtel")
 lifetime = 0.1
 emission_shape = 3
-emission_rect_extents = Vector2(2, 1)
+emission_rect_extents = Vector2(4, 3)
 spread = 180.0
 gravity = Vector2(0, 0)
 scale_amount_min = 0.5
 scale_amount_max = 1.5
 
-[node name="Area2D" type="Area2D" parent="visual/hand" unique_id=183200325 groups=["player"]]
+[node name="sword" type="Area2D" parent="visual/hand" unique_id=183200325 groups=["player"]]
+position = Vector2(-1, -2)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="visual/hand/Area2D" unique_id=17056899]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="visual/hand/sword" unique_id=17056899]
 z_index = -1
-shape = SubResource("SegmentShape2D_bhunq")
+position = Vector2(16, -9)
+shape = SubResource("RectangleShape2D_sweqy")
 
 [node name="Sprite2D" type="Sprite2D" parent="visual" unique_id=1859014717]
+position = Vector2(5, -10)
 texture = ExtResource("1_4flbx")
-hframes = 6
+hframes = 16
 
 [node name="player_anim" type="AnimationPlayer" parent="visual" unique_id=1902879416]
 libraries/ = SubResource("AnimationLibrary_onrkg")
 autoplay = &"idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1798765146]
-position = Vector2(0.5, 2)
-shape = SubResource("RectangleShape2D_bhunq")
+speed_scale = 3.0
 
 [node name="player_particle" type="CPUParticles2D" parent="." unique_id=159819210]
 z_index = -1
-position = Vector2(0, 6)
+position = Vector2(-2, 4)
 texture = ExtResource("5_sweqy")
 lifetime = 0.2
 emission_shape = 3
@@ -171,3 +170,7 @@ scale_amount_min = 0.2
 
 [node name="RollCooldown" type="Timer" parent="." unique_id=583720286]
 one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1439927982]
+position = Vector2(-2, 1)
+shape = SubResource("RectangleShape2D_riqys")

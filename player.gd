@@ -3,13 +3,20 @@ extends CharacterBody2D
 enum State {IDLE,WALKING,ATTACKING,ROLLING}
 var current_state = State.IDLE
 const SPEED = 100.0
+@onready var collision = $visual/hand/sword/CollisionShape2D
 const JUMP_VELOCITY = -200.0
 var can_attack = false
 @onready var vis = $visual
 @onready var sword = $visual/hand
+@onready var player_anim = $visual/player_anim
+@onready var sword_anin = $visual/hand/sword_anin
 @onready var rollcooldown = $RollCooldown
+func _ready() -> void:
+	$visual/hand/sword_particle.emitting = false
+	collision.disabled=true
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	var direction := Input.get_axis("left", "right")
@@ -22,12 +29,11 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	
 	#STATE
-	if current_state!=State.ATTACKING:
+	if current_state!=State.ATTACKING and current_state!=State.ROLLING:
 		if Input.is_action_just_pressed("attack"):
 			current_state = State.ATTACKING
-			attack()
 		elif Input.is_action_just_pressed("roll"):
-			roll()
+			current_state = State.ROLLING
 		elif direction!=0:
 			current_state = State.WALKING
 		else:
@@ -35,19 +41,19 @@ func _physics_process(delta: float) -> void:
 		
 	match current_state:
 		State.IDLE:
-			if $visual/player_anim.current_animation != "idle":
-				$visual/player_anim.play("idle")
+			$visual/player_anim.play("idle")
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 		State.WALKING:
 			velocity.x = direction * SPEED
 			if direction!=0:
-				vis.scale.x = 1 if direction > 0 else -1
+				vis.scale.x = 1 if direction > 0 else -1	
 			else:
 				current_state = State.IDLE
 		State.ATTACKING:
 			velocity.x = 0
+			attack()
 		State.ROLLING:
-			pass
+			roll()
 			
 				
 
@@ -55,26 +61,30 @@ func _physics_process(delta: float) -> void:
 			
 			
 func roll():
-	if rollcooldown.is_stopped():
-		current_state = State.ROLLING
+	if rollcooldown.is_stopped() and player_anim.current_animation!="roll":
+		player_anim.play("roll")
 		rollcooldown.start()
-		$visual/player_anim.play("roll")
 		var roll_direction = vis.scale.x
-		var tween = create_tween()
-		velocity.x = roll_direction * 600
-		tween.tween_callback(finish_roll)
-		print("rolando",velocity)
-
+		velocity.x = roll_direction * 100
+		print("rolando")
+		await player_anim.animation_finished
+		finish_roll()
 func attack():
-	current_state = State.ATTACKING
-	var tween = create_tween()
-	print("attacando")
-	tween.tween_property(sword,"rotation_degrees",90,0.1)
-	tween.tween_property(sword,"rotation_degrees",0,0.05)
-	tween.tween_callback(finish_attack)
+	if player_anim.current_animation != "attack1":
+		player_anim.play("attack1")
+		print("attacando")
+		await player_anim.animation_finished
+		finish_attack()
 
+func on_hitbox():
+	print("ativou")
+	collision.disabled = false
+	$visual/hand/sword_particle.emitting = true
+func off_hitbox():	
+	print("desativou")
+	collision.disabled = true
+	$visual/hand/sword_particle.emitting = false
 func finish_attack():
 	current_state = State.IDLE # Ou volte para IDLE/WALKING
 func finish_roll():
-	velocity.x = 0
 	current_state = State.IDLE # Ou volte para IDLE/WALKING
