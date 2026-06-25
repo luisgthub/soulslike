@@ -8,6 +8,7 @@
 size = Vector2(6, 10)
 
 [node name="dummy" type="CharacterBody2D" unique_id=463930189]
+collision_mask = 2
 script = ExtResource("1_xmspm")
 notify = ExtResource("2_0umox")
 
@@ -15,6 +16,8 @@ notify = ExtResource("2_0umox")
 texture = ExtResource("1_gtj52")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1844037262]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1722828169]
 shape = SubResource("RectangleShape2D_xmspm")

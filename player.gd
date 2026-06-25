@@ -80,10 +80,24 @@ func on_hitbox():
 	print("ativou")
 	collision.disabled = false
 	$visual/hand/sword_particle.emitting = true
+
 func off_hitbox():	
 	print("desativou")
 	collision.disabled = true
 	$visual/hand/sword_particle.emitting = false
+
+	
+	
+	
+func player_on_hitbox():
+	print("ativou")
+	set_collision_mask_value(1, true)
+	set_collision_mask_value(2, true)
+func player_off_hitbox():	
+	print("desativou")
+	set_collision_mask_value(1, false)
+	
+	
 func finish_attack():
 	current_state = State.IDLE # Ou volte para IDLE/WALKING
 func finish_roll():

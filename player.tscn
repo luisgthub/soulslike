@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://1jdgrepcowi7" path="res://assets/sprites/particleweapon.png" id="4_hqtel"]
 [ext_resource type="Texture2D" uid="uid://lgyb3vppfi0k" path="res://assets/sprites/particlewalk.png" id="5_sweqy"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sweqy"]
-size = Vector2(7, 8)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hs0m"]
+size = Vector2(11, 10)
 
 [sub_resource type="Animation" id="Animation_onrkg"]
 length = 0.001
@@ -91,7 +91,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_2hs0m"]
 resource_name = "roll"
-length = 1.2333333
+length = 1.4666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -103,6 +103,34 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [10, 11, 12, 13, 14, 15]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06666668, 1.2333333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"player_off_hitbox"
+}, {
+"args": [],
+"method": &"player_on_hitbox"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_onrkg"]
@@ -117,8 +145,12 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_riqys"]
 size = Vector2(8, 10)
 
-[node name="player" type="CharacterBody2D" unique_id=777571882]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
+size = Vector2(8, 10)
+
+[node name="player" type="CharacterBody2D" unique_id=777571882 groups=["player"]]
 z_index = 1
+collision_mask = 3
 script = ExtResource("1_onrkg")
 
 [node name="visual" type="Node2D" parent="." unique_id=1644011378]
@@ -128,7 +160,7 @@ position = Vector2(1, 6)
 
 [node name="sword_particle" type="CPUParticles2D" parent="visual/hand" unique_id=1606278561]
 z_index = -1
-position = Vector2(17, -2)
+position = Vector2(14, -2)
 rotation = 1.553343
 texture = ExtResource("4_hqtel")
 lifetime = 0.1
@@ -141,11 +173,12 @@ scale_amount_max = 1.5
 
 [node name="sword" type="Area2D" parent="visual/hand" unique_id=183200325 groups=["player"]]
 position = Vector2(-1, -2)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="visual/hand/sword" unique_id=17056899]
 z_index = -1
-position = Vector2(16, -9)
-shape = SubResource("RectangleShape2D_sweqy")
+position = Vector2(9.5, -4)
+shape = SubResource("RectangleShape2D_2hs0m")
 
 [node name="Sprite2D" type="Sprite2D" parent="visual" unique_id=1859014717]
 position = Vector2(5, -10)
@@ -171,6 +204,12 @@ scale_amount_min = 0.2
 [node name="RollCooldown" type="Timer" parent="." unique_id=583720286]
 one_shot = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1439927982]
+[node name="PlayerArea" type="Area2D" parent="." unique_id=9285438]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea" unique_id=1439927982]
 position = Vector2(-2, 1)
 shape = SubResource("RectangleShape2D_riqys")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=818554740]
+position = Vector2(-3, 1)
+shape = SubResource("RectangleShape2D_hqtel")
